@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col-xs-8 col-xs-offset-2">
+    <!-- <div class="alert alert-danger" *ngIf="error">
+      <p>{{ error }}</p>
+    </div> -->
+
+    <app-alert *ngIf="error" [message]="error" (closeAlert)="onHandleError()"></app-alert>
+
+    <div style="display: flex; justify-content: center" *ngIf="isLoading">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="text"
+          class="form-control"
+          id="email"
+          formControlName="email"
+        />
+        <span
+          class="help-block"
+          *ngIf="!authForm.get('email').valid && authForm.get('email').touched"
+        >
+          <span *ngIf="authForm.get('email').errors['required']"
+            >Email is required</span
+          >
+          <span *ngIf="authForm.get('email').errors['email']"
+            >Invalid email format</span
+          >
+        </span>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          formControlName="password"
+        />
+        <span
+          class="help-block"
+          *ngIf="
+            !authForm.get('password').valid && authForm.get('password').touched
+          "
+        >
+          <span *ngIf="authForm.get('password').errors['required']"
+            >Password is required</span
+          >
+          <span *ngIf="authForm.get('password').errors['minlength']"
+            >Password must be min 6 chars</span
+          >
+        </span>
+      </div>
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="!authForm.valid"
+      >
+        {{ isLoginMode ? "Login" : "Sign Up" }}
+      </button>
+      <button
+        class="btn btn-info"
+        style="margin-left: 1rem"
+        (click)="onSwitchMode()"
+        type="button"
+      >
+        Switch to {{ isLoginMode ? "Sign Up" : "Login" }}
+      </button>
+    </form>
+  </div>
+</div>
